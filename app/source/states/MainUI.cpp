@@ -10,9 +10,9 @@ const char *AXIOM_PLUGIN = "/luma/plugins/axiom.3gx";
 const char *AXIOM_PLUGIN_MAGIC = "AXOM";
 constexpr u32 AXIOM_PLUGIN_VERSION = SYSTEM_VERSION(1, 0, 0);
 
-Result retPNID = 0;
-u32 pnidAccountSlot = 0;
-AccountId pnid = {};
+Result retBNID = 0;
+u32 bnidAccountSlot = 0;
+AccountId bnid = {};
 
 Result MainUI::unloadAccount(MainStruct *mainStruct) {
     Result rc = 0;
@@ -110,21 +110,21 @@ void MainUI::migrateAccount(MainStruct *mainStruct) {
     Result rc = 0;
     u32 pretendo_account_index = 0;
     // Logs won't override any previous errors
-    handleResult(ACT_GetAccountIndexOfFriendAccountId(&pretendo_account_index, 2), mainStruct, "Get PNID for migration");
+    handleResult(ACT_GetAccountIndexOfFriendAccountId(&pretendo_account_index, 2), mainStruct, "Get BNID for migration");
     if (pretendo_account_index != 0) {
         bool is_commited = false;
-        handleResult(ACT_GetAccountInfo(&is_commited, sizeof(bool), pretendo_account_index, INFO_TYPE_IS_COMMITTED), mainStruct, "Get PNID commit status");
+        handleResult(ACT_GetAccountInfo(&is_commited, sizeof(bool), pretendo_account_index, INFO_TYPE_IS_COMMITTED), mainStruct, "Get BNID commit status");
         if (!is_commited) {
-            handleResult(ACTA_CommitConsoleAccount(pretendo_account_index), mainStruct, "Commit PNID");
+            handleResult(ACTA_CommitConsoleAccount(pretendo_account_index), mainStruct, "Commit BNID");
         }
     }
 }
 
-void MainUI::unlinkPNID(MainStruct *mainStruct) {
-    if (R_FAILED(retPNID = ACTA_UnbindServerAccount(pnidAccountSlot, true))) {
-        LOG_AXIOM_ERROR(mainStruct, std::format("ACTA_UnbindServerAccount failed with error code {}!", retPNID).c_str());
+void MainUI::unlinkBNID(MainStruct *mainStruct) {
+    if (R_FAILED(retBNID = ACTA_UnbindServerAccount(bnidAccountSlot, true))) {
+        LOG_AXIOM_ERROR(mainStruct, std::format("ACTA_UnbindServerAccount failed with error code {}!", retBNID).c_str());
 	} else {
-		LOG_AXIOM_ERROR(mainStruct, "Successfully unlinked PNID!");
+		LOG_AXIOM_ERROR(mainStruct, "Successfully unlinked BNID!");
 	}
 }
 
@@ -302,8 +302,8 @@ bool MainUI::drawUI(MainStruct *mainStruct, C3D_RenderTarget* top_screen, C3D_Re
                 std::remove("/luma/plugins/axiom.3gx");
                 std::rename(AXIOM_UPDATE_PATH "/axiom.3gx",           "/luma/plugins/axiom.3gx");
 
-                std::remove("/3ds/juxt-prod.pem");
-                std::rename(AXIOM_UPDATE_PATH "/juxt-prod.pem",        "/3ds/juxt-prod.pem");
+                std::remove("/3ds/bver-prod.pem");
+                std::rename(AXIOM_UPDATE_PATH "/bver-prod.pem",        "/3ds/bver-prod.pem");
 
                 std::remove(AXIOM_UPDATE_PATH "/update.txt");
             }
@@ -326,8 +326,8 @@ bool MainUI::drawUI(MainStruct *mainStruct, C3D_RenderTarget* top_screen, C3D_Re
     if (mainStruct->prompt.active) {
         if (mainStruct->prompt.result == PromptResult::Yes) {
             switch (mainStruct->prompt.status) {
-                case PromptStatus::PNIDUnlink:
-                    unlinkPNID(mainStruct);
+                case PromptStatus::BNIDUnlink:
+                    unlinkBNID(mainStruct);
                     break;
                 default:
                     LOG_AXIOM_ERROR(mainStruct, "Unknown prompt called.");
@@ -404,28 +404,28 @@ bool MainUI::drawUI(MainStruct *mainStruct, C3D_RenderTarget* top_screen, C3D_Re
         }
 
         if (kDown & KEY_X) {
-            // We need to confirm we actually even have a linked PNID.
-	        if (R_SUCCEEDED(retPNID)) {
-		        if (R_FAILED(retPNID = ACT_GetAccountIndexOfFriendAccountId(&pnidAccountSlot, 2))) {
-			        LOG_AXIOM_ERROR(mainStruct, std::format("ACT_GetAccountIndexOfFriendAccountId failed with error code {}!", retPNID).c_str());
+            // We need to confirm we actually even have a linked BNID.
+	        if (R_SUCCEEDED(retBNID)) {
+		        if (R_FAILED(retBNID = ACT_GetAccountIndexOfFriendAccountId(&bnidAccountSlot, 2))) {
+			        LOG_AXIOM_ERROR(mainStruct, std::format("ACT_GetAccountIndexOfFriendAccountId failed with error code {}!", retBNID).c_str());
 		        }
 	        }
 
-            if (pnidAccountSlot == 0) {
-                LOG_AXIOM_ERROR(mainStruct, "There is no PNID linked on this console!");
+            if (bnidAccountSlot == 0) {
+                LOG_AXIOM_ERROR(mainStruct, "There is no BNID linked on this console!");
             }
 
-	        if (R_SUCCEEDED(retPNID)) {
-		        if (R_FAILED(retPNID = ACT_GetAccountInfo(pnid, sizeof(pnid), pnidAccountSlot, INFO_TYPE_ACCOUNT_ID))) {
-			        LOG_AXIOM_ERROR(mainStruct, std::format("ACT_GetAccountInfo failed with error code {}!", retPNID).c_str());
+	        if (R_SUCCEEDED(retBNID)) {
+		        if (R_FAILED(retBNID = ACT_GetAccountInfo(bnid, sizeof(bnid), bnidAccountSlot, INFO_TYPE_ACCOUNT_ID))) {
+			        LOG_AXIOM_ERROR(mainStruct, std::format("ACT_GetAccountInfo failed with error code {}!", retBNID).c_str());
 		        }
 	        }
 
-            if (R_SUCCEEDED(retPNID)) {
-		        if (pnid[0] != '\0') {
-			        openPrompt(mainStruct, std::format("Are you sure you would like to unlink your PNID {}? Your PNID can be relinked at any time.", pnid), PromptStatus::PNIDUnlink);
+            if (R_SUCCEEDED(retBNID)) {
+		        if (bnid[0] != '\0') {
+			        openPrompt(mainStruct, std::format("Are you sure you would like to unlink your BNID {}? Your BNID can be relinked at any time.", bnid), PromptStatus::BNIDUnlink);
 		        } else {
-			        LOG_AXIOM_ERROR(mainStruct, "There is no PNID linked on this console!");
+			        LOG_AXIOM_ERROR(mainStruct, "There is no BNID linked on this console!");
 		        }
 	        }
         }
