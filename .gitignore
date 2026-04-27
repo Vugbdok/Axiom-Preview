@@ -53,5 +53,4 @@ target
 .vscode
 
 # Publish
-*.zip
 .DS_Store
