@@ -25,18 +25,19 @@ static void sceneInit(void)
 	C2D_SpriteFromSheet(&mainStruct.brewtendo_unloaded_selected, spriteSheet, sheet_brewtendo_unloaded_selected_idx);
 	C2D_SpriteFromSheet(&mainStruct.brewtendo_loaded_selected, spriteSheet, sheet_brewtendo_loaded_selected_idx);
 	C2D_SpriteFromSheet(&mainStruct.brewtendo_loaded_deselected, spriteSheet, sheet_brewtendo_loaded_deselected_idx);
-	C2D_SpriteSetCenter(&mainStruct.top, 0.49f, 0.49f);
-	C2D_SpriteSetPos(&mainStruct.top, 400/2, 240/2);
-	C2D_SpriteSetPos(&mainStruct.go_back, 0, 214);
-	C2D_SpriteSetPos(&mainStruct.header, 95, 14);
-	C2D_SpriteSetPos(&mainStruct.brewtendo_loaded_selected, 49, 59);
-	C2D_SpriteSetPos(&mainStruct.brewtendo_unloaded_selected, 49, 59);
-	C2D_SpriteSetPos(&mainStruct.brewtendo_unloaded_deselected, 49, 59);
-	C2D_SpriteSetPos(&mainStruct.brewtendo_loaded_deselected, 49, 59);
-	C2D_SpriteSetPos(&mainStruct.nintendo_loaded_selected, 165, 59);
-	C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_selected, 165, 59);
-	C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_deselected, 165, 59);
-	C2D_SpriteSetPos(&mainStruct.nintendo_loaded_deselected, 165, 59);
+    C2D_SpriteSetCenter(&mainStruct.top, 0.49f, 0.49f);
+    C2D_SpriteSetPos(&mainStruct.top, 400/2, 240/2);
+    C2D_SpriteSetPos(&mainStruct.go_back, 0, 214);
+    C2D_SpriteSetPos(&mainStruct.header, 95, 14);
+    C2D_SpriteSetPos(&mainStruct.brewtendo_loaded_selected, 49, 59);
+    C2D_SpriteSetPos(&mainStruct.brewtendo_unloaded_selected, 49, 59);
+    C2D_SpriteSetPos(&mainStruct.brewtendo_unloaded_deselected, 49, 59);
+    C2D_SpriteSetPos(&mainStruct.brewtendo_loaded_deselected, 49, 59);
+    C2D_SpriteSetPos(&mainStruct.nintendo_loaded_selected, 165, 59);
+    C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_selected, 165, 59);
+    C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_deselected, 165, 59);
+    C2D_SpriteSetPos(&mainStruct.nintendo_loaded_deselected, 165, 59);
+    C2D_SpriteSetScale(&mainStruct.top, 0.9f, 0.9f);
 	
 	textBuf = C2D_TextBufNew(4096); // initialize the text buffer with a max glyph count of 4096
 }
@@ -88,8 +89,8 @@ int main()
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		
-		C2D_TargetClear(top_screen, C2D_Color32(21, 22, 28, 0xFF));
-		C2D_TargetClear(bottom_screen, C2D_Color32(21, 22, 28, 0xFF));
+        C2D_TargetClear(top_screen, C2D_Color32(241, 235, 136, 0xFF));
+        C2D_TargetClear(bottom_screen, C2D_Color32(241, 235, 136, 0xFF));
 		
 		// TODO: change firstRunOfState into stateRunIndex, incrementing every time the state is run
 		if (mainStruct.lastState != mainStruct.state) mainStruct.firstRunOfState = true;
