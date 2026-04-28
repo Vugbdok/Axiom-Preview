@@ -41,7 +41,6 @@ static void sceneInit(void)
     C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_selected, 165, 59);
     C2D_SpriteSetPos(&mainStruct.nintendo_unloaded_deselected, 165, 59);
     C2D_SpriteSetPos(&mainStruct.nintendo_loaded_deselected, 165, 59);
-    C2D_SpriteSetScale(&mainStruct.top, 0.10f, 0.10f);
     C2D_SpriteSetCenter(&mainStruct.bottom, 0.5f, 0.5f);
     C2D_SpriteSetPos(&mainStruct.bottom, 160, 120);
 	
