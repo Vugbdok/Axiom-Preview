@@ -32,7 +32,7 @@ include $(DEVKITARM)/3ds_rules
 #     - <libctru folder>/default_icon.png
 #---------------------------------------------------------------------------------
 APP_TITLE       := 	Axiom
-APP_DESCRIPTION := 	Axiom
+APP_DESCRIPTION := 	Axiom Preview
 APP_AUTHOR	:=	By vugbdok8307, andrea__2209
 TARGET		:=	axiom
 BUILD		:=	build
