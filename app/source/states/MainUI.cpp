@@ -14,6 +14,34 @@ Result retBNID = 0;
 u32 bnidAccountSlot = 0;
 AccountId bnid = {};
 
+void loadAndPlayBGM(const char* path) {
+    FILE* f = fopen(path, "rb");
+    if (!f) return;
+
+    fseek(f, 0, SEEK_END);
+    u32 size = ftell(f);
+    
+    // Skip the 44-byte WAV header
+    u32 dataSize = size - 44;
+    fseek(f, 44, SEEK_SET);
+
+    // Allocate Linear Memory
+    u8* buffer = (u8*)linearAlloc(dataSize);
+    fread(buffer, 1, dataSize, f);
+    fclose(f);
+
+    // Setup the WaveBuffer
+    ndspWaveBuf waveBuf;
+    memset(&waveBuf, 0, sizeof(ndspWaveBuf));
+    waveBuf.data_vaddr = buffer;
+    waveBuf.nsamples = dataSize / 4;
+    waveBuf.looping = true;
+    waveBuf.status = NDSP_WBUF_FREE;
+
+    DSP_FlushDataCache(buffer, dataSize);
+    ndspChnAppendWaveBuf(0, &waveBuf);
+}
+
 Result MainUI::unloadAccount(MainStruct *mainStruct) {
     Result rc = 0;
 
@@ -262,6 +290,15 @@ void MainUI::drawPrompt(MainStruct* mainStruct)
 
 bool MainUI::drawUI(MainStruct *mainStruct, C3D_RenderTarget* top_screen, C3D_RenderTarget* bottom_screen, u32 kDown, u32 kHeld, touchPosition touch)
 {
+    bool MainUI::drawUI(MainStruct *mainStruct, ...) {
+        
+        // One-time BGM Setup
+        if (!mainStruct->musicStarted) {
+            // Load and play BGM
+            loadAndPlayBGM("romfs:/bgm/SETTINGS_SETUP_BGM.wav");
+            mainStruct->musicStarted = true;
+        }
+
     // Check if Axiom has been updated
     if (!mainStruct->updateChecked) {
         mainStruct->updateChecked = true;
