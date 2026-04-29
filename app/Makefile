@@ -46,7 +46,7 @@ GFXBUILD 	:=  $(BUILD)
 RSF_FILE := meta/axiom-cia.rsf
 
 ICON      := meta/icon.png
-BANNER_IMAGE := meta/banner.png
+BNR_IMAGE := meta/banner.png
 BANNER_AUDIO := meta/audio.wav
 
 VERSION_HEADER = version.hpp
