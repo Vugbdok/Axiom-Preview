@@ -74,7 +74,7 @@ CXXFLAGS	:=  $(CFLAGS) -fno-rtti -fno-exceptions -std=c++20
 ASFLAGS	    :=	-g $(ARCH)
 LDFLAGS	     =	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map) $(OPTIMIZE)
 
-LIBS	    := -lcitro2d -lcitro3d -lctru -lm
+LIBS	    := -lcitro2d -lcitro3d -lcomms -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
