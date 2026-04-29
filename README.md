@@ -7,6 +7,6 @@ This is a special preview version of Axiom to show off our amazing UI!
 
 ## Usage
 
-Download the ROM from our eShop or download it [here](https://github.com/Vugbdok/Axiom-Preview/releases/AxiomSPECIAL%20v1)
+Download the app from our eShop or download it [here](https://github.com/Vugbdok/Axiom-Preview/releases/tag/Special-Preview)!
 
 # NO ETA!
