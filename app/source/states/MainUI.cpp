@@ -341,8 +341,8 @@ bool MainUI::drawUI(MainStruct *mainStruct, C3D_RenderTarget* top_screen, C3D_Re
                 std::remove("/luma/plugins/axiom.3gx");
                 std::rename(AXIOM_UPDATE_PATH "/axiom.3gx",           "/luma/plugins/axiom.3gx");
 
-                std::remove("/3ds/bver-prod.pem");
-                std::rename(AXIOM_UPDATE_PATH "/bver-prod.pem",        "/3ds/bver-prod.pem");
+                std::remove("/3ds/juxt-prod.pem");
+                std::rename(AXIOM_UPDATE_PATH "/juxt-prod.pem",        "/3ds/juxt-prod.pem");
 
                 std::remove(AXIOM_UPDATE_PATH "/update.txt");
             }

@@ -46,13 +46,13 @@ GFXBUILD 	:=  $(BUILD)
 RSF_FILE := meta/axiom-cia.rsf
 
 ICON      := meta/icon.png
-BNR_IMAGE := meta/banner.png
-BNR_AUDIO := meta/audio.wav
+BANNER_IMAGE := meta/banner.png
+BANNER_AUDIO := meta/audio.wav
 
 VERSION_HEADER = version.hpp
 
-VERSION_MAJOR := 0
-VERSION_MINOR := 7
+VERSION_MAJOR := 01
+VERSION_MINOR := 0
 VERSION_MICRO := 0
 
 #GFXBUILD	:=	$(ROMFS)/gfx
